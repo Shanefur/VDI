@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.css"> 
+    <title>Login/SignUp</title>
+    <link rel="icon" href="images/logo.jpg" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <!-- Inside the <nav> tag in the <header> section -->
+        <nav>
+          <img src="images/logo.jpg" alt="Logo" />
+          <div class="site-name">E-Commerce</div>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#productSection">Products</a></li>
+            <li><a href="index.html#contactUs">Contact Us</a></li>
+    
+          </ul>
+        </nav>
+      </header>
+      <center>
+      <section class="mod">
+    <div class="background-video">
+        <!-- Add your background video here -->
+        <video autoplay muted loop>
+            <source src="images/video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <div class="container">
+        <div class="form-container">
+            <!-- Login Form -->
+            <form id="loginForm" class="form">
+                <h2>Login</h2>
+                <label for="loginUsername">Username:</label>
+                <input type="text" id="loginUsername" name="loginUsername" required>
+                <label for="loginPassword">Password:</label>
+                <input type="password" id="loginPassword" name="loginPassword" required>
+                <button type="button" onclick="login()">Login</button>
+            </form>
+
+            <!-- Sign Up Form -->
+            <form id="signupForm" class="form">
+                <h2>Sign Up</h2>
+                <label for="signupUsername">Username:</label>
+                <input type="text" id="signupUsername" name="signupUsername" required>
+                <label for="signupPassword">Password:</label>
+                <input type="password" id="signupPassword" name="signupPassword" required>
+                <button type="button" onclick="signup()">Sign Up</button>
+            </form>
+        </div>
+    </div>
+</section>
+</center>
+    <script src="login.js"></script>
+    
+</body>
+</html>

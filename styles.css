@@ -15,7 +15,7 @@ header {
 .site-name {
     font-size: 1.5rem; /* Adjust the font size as needed */
     color: white;
-    margin-left: -900px; /* Adjust the margin as needed for spacing */
+    margin-left: -800px; /* Adjust the margin as needed for spacing */
     font-weight: bold; /* Optional: Make the font bold */
   }
 
@@ -39,6 +39,7 @@ header {
         /* Adjust the margin for smaller screens */
     }
 }
+
   nav {
     display: flex;
     align-items: center;
