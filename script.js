@@ -1,140 +1,105 @@
-function addToCart(id, name, price) {
-  // Retrieve existing cart items from localStorage
-  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+// script.js
+
+// Function to initialize the script
+function initializeScript() {
+  var cartMenu = document.getElementById("cart-menu-container");
+  var closeButton = document.getElementById("close-cart-button");
+  var clearCartButton = document.getElementById("clear-cart-button");
+
+  // Add click event listeners
+  document.getElementById("cart-menu").addEventListener("click", toggleCart);
+  document.body.addEventListener("click", closeCartMenuOutsideClick);
+  closeButton.addEventListener("click", closeCart);
+  clearCartButton.addEventListener("click", clearCart);
+
+  // Function to toggle the cart menu
+  function toggleCart(event) {
+    event.stopPropagation(); // Prevents the body click event from firing
+    cartMenu.classList.toggle("show-cart-menu");
+  }
+
+  // Function to close the cart menu when clicking anywhere else on the page
+  function closeCartMenuOutsideClick(event) {
+    if (!cartMenu.contains(event.target) && !event.target.matches("#cart-menu")) {
+      cartMenu.classList.remove("show-cart-menu");
+    }
+  }
+
+  // Function to close the cart menu when the close button is clicked
+  function closeCart() {
+    cartMenu.classList.remove("show-cart-menu");
+  }
+
+  // Function to clear the entire cart
+  function clearCart() {
+    var cartMenuContent = document.querySelector(".cart-menu-content");
+    cartMenuContent.innerHTML = ""; // Remove all cart items
+
+    // Update the cart badge count
+    var cartBadge = document.querySelector(".cart-badge");
+    cartBadge.innerText = "0";
+
+    // Close the cart menu
+    cartMenu.classList.remove("show-cart-menu");
+  }
+}
+
+// Execute the initialization function when the DOM is fully loaded
+document.addEventListener("DOMContentLoaded", initializeScript);
+
+// Function to add an item to the cart
+function addToCart(id, name, price, image) {
+  // Your add to cart logic here
+  var cartBadge = document.querySelector(".cart-badge");
+  var currentCount = parseInt(cartBadge.innerText);
+  cartBadge.innerText = currentCount + 1;
 
   // Check if the item is already in the cart
-  let existingItem = cartItems.find((item) => item.id === id);
-
-  if (existingItem) {
-    // If the item is already in the cart, update the quantity
-    existingItem.quantity += 1;
+  var existingCartItem = document.querySelector(`.cart-item[data-id="${id}"]`);
+  if (existingCartItem) {
+    // Item already exists, update quantity
+    var quantityElement = existingCartItem.querySelector(".quantity");
+    var currentQuantity = parseInt(quantityElement.innerText);
+    quantityElement.innerText = currentQuantity + 1;
   } else {
-    // If the item is not in the cart, add it
-    cartItems.push({
-      id: id,
-      name: name,
-      price: price,
-      quantity: 1,
-    });
-  }
+    // Item doesn't exist, create a new cart item element
+    var cartItem = document.createElement("div");
+    cartItem.classList.add("cart-item");
+    cartItem.setAttribute("data-id", id);
+    cartItem.innerHTML = `
+      <img src="${image}" alt="${name}" class="item-image">
+      <div class="item-details">
+        <p>${name}</p>
+        <p>$${price}</p>
+        <p class="quantity">1</p>
+      </div>
+      <button class="remove-item-button" onclick="removeCartItem(this)">Remove</button>
+    `;
 
-  // Save the updated cart items to localStorage
-  localStorage.setItem("cartItems", JSON.stringify(cartItems));
-
-  // Update the cart display
-  updateCartDisplay();
-}
-
-function updateCartDisplay() {
-  // Retrieve cart items from localStorage
-  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-
-  // Update the cart section HTML
-  let cartItemsHtml = "";
-
-  cartItems.forEach((item) => {
-    cartItemsHtml += `<div class="cart-item" data-id="${item.id}" data-name="${
-      item.name
-    }" data-price="${item.price}" data-quantity="${item.quantity}">
-                            <img src="product${item.id}.jpg" alt="${item.name}">
-                            <div class="cart-item-info">
-                                <h3>${item.name}</h3>
-                                <p>$${item.price.toFixed(2)}</p>
-                                <p>Quantity: ${item.quantity}</p>
-                                <div class="quantity-buttons">
-                                    <button onclick="updateQuantity(${
-                                      item.id
-                                    }, -1)">-</button>
-                                    <button onclick="updateQuantity(${
-                                      item.id
-                                    }, 1)">+</button>
-                                </div>
-                            </div>
-                        </div>`;
-  });
-
-  // Display clear cart button
-  if (cartItems.length > 0) {
-    cartItemsHtml += `<button class="clear-cart-button" onclick="clearCart()">Clear Cart</button>`;
-  }
-
-  document.getElementById("cartSection").innerHTML = cartItemsHtml;
-}
-
-function updateQuantity(id, change) {
-  // Retrieve cart items from localStorage
-  let cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
-
-  // Find the item in the cart
-  let existingItem = cartItems.find((item) => item.id === id);
-
-  if (existingItem) {
-    // Update the quantity
-    existingItem.quantity += change;
-
-    // Ensure the quantity is at least 1
-    existingItem.quantity = Math.max(existingItem.quantity, 1);
-
-    // Save the updated cart items to localStorage
-    localStorage.setItem("cartItems", JSON.stringify(cartItems));
-
-    // Update the cart display
-    updateCartDisplay();
+    // Add the cart item to the cart menu
+    var cartMenuContent = document.querySelector(".cart-menu-content");
+    cartMenuContent.appendChild(cartItem);
   }
 }
 
-function clearCart() {
-  // Clear cart items in localStorage
-  localStorage.removeItem("cartItems");
+// Function to remove a cart item
+function removeCartItem(button) {
+  // Your remove item logic here
+  var cartItem = button.parentElement;
+  var quantityElement = cartItem.querySelector(".quantity");
+  var currentQuantity = parseInt(quantityElement.innerText);
 
-  // Update the cart display
-  updateCartDisplay();
+  if (currentQuantity > 1) {
+    // Decrease quantity if more than 1
+    quantityElement.innerText = currentQuantity - 1;
+  } else {
+    // Remove the entire cart item if quantity is 1
+    cartItem.remove();
+
+    // Update the cart badge count
+    var cartBadge = document.querySelector(".cart-badge");
+    var currentCount = parseInt(cartBadge.innerText);
+    cartBadge.innerText = currentCount - 1;
+  }
 }
 
-// Initial cart display on page load
-updateCartDisplay();
-
-function showSignupForm() {
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('signupForm').style.display = 'block';
-}
-
-function showLoginForm() {
-    document.getElementById('loginForm').style.display = 'block';
-    document.getElementById('signupForm').style.display = 'none';
-}
-
-function login() {
-    // Basic client-side validation
-    var username = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
-
-    // You would typically send this data to the server for authentication
-    console.log('Sending login request with username:', username, 'and password:', password);
-
-    // For demonstration purposes, redirect to home page after login
-    alert('Login successful! Redirecting to home page...');
-    window.location.href = 'index.html'; // Replace with the actual home page URL
-    return false; // Prevent form submission (you may remove this line in a real scenario)
-}
-
-function signup() {
-    // Basic client-side validation
-    var newUsername = document.getElementById('newUsername').value;
-    var newPassword = document.getElementById('newPassword').value;
-    var confirmPassword = document.getElementById('confirmPassword').value;
-
-    // Additional validation, e.g., checking if passwords match
-    if (newPassword !== confirmPassword) {
-        alert('Passwords do not match. Please try again.');
-        return false;
-    }
-
-    // You would typically send this data to the server for user registration
-    console.log('Sending signup request with username:', newUsername, 'and password:', newPassword);
-
-    // For demonstration purposes, redirect to home page after signup
-    alert('Sign up successful! Redirecting to home page...');
-    window.location.href = 'index.html'; // Replace with the actual home page URL
-    return false; // Prevent form submission (you may remove this line in a real scenario)
-}

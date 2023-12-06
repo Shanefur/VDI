@@ -7,18 +7,45 @@ body {
 /* Navbar Styles */
 
 header {
-    background-color: #ffcc00;
+    background-color: #333;
     color: #fff;
     padding: 10px;
     text-align: center;
 }
+.site-name {
+    font-size: 1.5rem; /* Adjust the font size as needed */
+    color: white;
+    margin-left: -900px; /* Adjust the margin as needed for spacing */
+    font-weight: bold; /* Optional: Make the font bold */
+  }
 
-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
+
+/* Add different margins for different screen sizes */
+@media screen and (max-width: 1245px) {
+    .site-name {
+        margin-left: -200px;
+    }
 }
+
+@media screen and (max-width: 1110px) {
+    .site-name {
+        margin-left: 100px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .site-name {
+        margin-left: 300px;
+        /* Adjust the margin for smaller screens */
+    }
+}
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    background-color: #333; /* Optional: Add a background color to the navbar */
+  }
 
 nav img {
     max-width: 100px;
@@ -27,10 +54,11 @@ nav img {
 nav ul {
     list-style: none;
     display: flex;
-}
+    gap: 20px;
+  }
 
 nav li {
-    margin: 0 15px;
+    margin: 0 35px;
 }
 
 nav a {
@@ -70,10 +98,39 @@ nav a:hover {
     align-items: center;
 }
 
+/* Add this to your "styles.css" file */
 .cart-icon {
-    font-size: 24px;
-    margin-right: 5px;
-}
+    padding-bottom: 10px;
+    
+    right: 20px;
+    cursor: pointer;
+    font-size: 32px; /* Adjust the icon size */
+    color: #ffffff;
+  }
+  
+  .cart-badge {
+    position: absolute;
+    top: 10px;
+    right: 0;
+    background-color: red; /* Add your preferred background color */
+    color: white; /* Add your preferred text color */
+    border-radius: 50%;
+    padding: 0.3em 0.5em;
+    font-size: 0.6em; /* Adjust the font size as needed */
+  }
+  
+  .cart-container {
+   
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 300px; /* Adjust as needed */
+    background-color: #fff;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    display: none;
+  }
+  
 
 .cart-count {
     background-color: #ffcc00;
@@ -88,7 +145,7 @@ nav a:hover {
     position: relative;
     height: 100vh;
     /* Set the height of the hero section to cover the viewport */
-    background: url('hero-image1.jpg') center/cover no-repeat;
+    background: url('images/hero-image1.jpg') center/cover no-repeat;
     /* Replace 'hero-image.jpg' with your image path */
     color: #fff;
     text-align: center;
@@ -130,7 +187,7 @@ nav a:hover {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    padding: 20px;
+    padding: 30px;
     margin-top: 150px;
     /* Adjusted to make space for the secondary banner */
 }
@@ -194,6 +251,29 @@ nav a:hover {
     color: #333;
     /* Adjusted to make space for the secondary banner */
 }
+/* Add this CSS for cart menu styling */
+/* Add this CSS for cart menu styling */
+.cart-menu-container {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Initially hide the cart menu to the right */
+    height: 100%;
+    width: 300px; /* Adjust as needed */
+    background-color: white;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for a layered effect */
+    transition: right 0.3s ease; /* Add smooth transition effect */
+    z-index: 2; /* Ensure it's above other elements */
+  }
+  
+  .cart-menu-content {
+    padding: 20px;
+  }
+  
+  .show-cart-menu {
+    right: 0; /* Display the cart menu by adjusting right property */
+    z-index: 3; /* Ensure it's above other elements when shown */
+  }
+  
 
 .cart-heading {
     width: 100%;
@@ -204,7 +284,7 @@ nav a:hover {
 }
 
 .cart-item {
-    width: 30%;
+    width: 80%;
     margin-bottom: 20px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
@@ -212,6 +292,7 @@ nav a:hover {
     overflow: hidden;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     position: relative;
+    margin-left: 30px;
 }
 
 .cart-item img {
@@ -288,27 +369,32 @@ nav a:hover {
 }
 
 .secondary-banner {
+    height: 20%; /* Set the height to 100% of the viewport height */
+    width: 200%; /* Set the width to 100% */
+    position: relative; /* Add this to allow absolute positioning of child elements */
+  background-color: #ecc030; 
+  
+}
+  
+  .banner-image {
+    width: 100%; /* Ensure the image spans the entire width of the section */
+   /* Ensure the image spans the entire height of the section */
+    
+    margin-top:3px;
+  }
+  
+  .tagline {
+    position: absolute; /* Position the tagline absolutely within the section */
+    top: 50%; /* Position it vertically in the middle */
+    left: 50%; /* Position it horizontally in the middle */
+    transform: translate(-50%, -50%); /* Center it precisely */
     text-align: center;
-    padding: 50px 0;
-    background-color: #ffcc00;
-    color: #fff;
-
-}
-
-.banner-image {
-    width: 100%;
-    height: 300px;
-    /* Set the height of the image */
-    object-fit: cover;
-    /* Ensure the image covers the entire container */
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-.tagline {
-    font-size: 1.5em;
-    margin-top: 10px;
-}
+    color: rgb(255, 255, 255); /* Set the text color */
+  }
+  
+  .tagline p {
+    font-size: 24px; /* Set the font size of the tagline text */
+  }
 
 /* Responsive Styles */
 @media screen and (max-width: 768px) {
@@ -319,24 +405,47 @@ nav a:hover {
 }
 
 /* Footer Styles */
+/* Footer Section */
 footer {
-    background-color: #ffcc00;
-    color: #fff;
-    padding: 30px 0;
-    text-align: center;
-}
-
-.footer-columns {
+    background-color: #333; /* Set background color as desired */
+    color: #fff; /* Set text color as desired */
+    padding: 20px 0;
+   
+    bottom: 0;
+    width: 100%;
+  }
+  
+  /* Adjust styles for footer columns */
+  .footer-columns {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     flex-wrap: wrap;
-}
-
-.footer-column {
-    flex: 1;
-    margin: 10px;
-    text-align: left;
-}
+  }
+  
+  /* Adjust styles for each footer column */
+  .footer-column {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  /* Adjust styles for social icons */
+  .social-icons a {
+    color: #fff;
+    margin: 0 10px;
+  }
+  
+  /* Add responsive styles */
+  @media screen and (max-width: 768px) {
+    .footer-columns {
+      flex-direction: column;
+      text-align: center;
+    }
+    .footer-column {
+      margin-bottom: 10px;
+    }
+  }
+  
 
 .footer-column h3 {
     font-size: 1.2em;
@@ -353,12 +462,7 @@ footer {
     margin-bottom: 5px;
 }
 
-/* Social Media Icons */
-.social-icons {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
+
 
 .social-icons a {
     color: #fff;
@@ -384,3 +488,22 @@ footer {
         text-align: center;
     }
 }
+
+.remove-item-button {
+    background-color: red;
+    padding: 10px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px; /* Add margin to space it from the item details */
+    margin-left: 70px;
+  }
+  
+  .remove-item-button:hover {
+    background-color: darkred; /* Change color on hover if desired */
+  }
+  
+  .cart-item .item-details {
+    text-align: center; /* Center the item details */
+  }
